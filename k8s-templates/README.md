@@ -1,0 +1,1 @@
+this folder contains k8s templates for basic setup of k8s cluster. It includes templates for deployment, service, configmap, secret, etc. You can use these templates as a starting point for your own k8s cluster setup.

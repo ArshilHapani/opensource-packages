@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mongo-admin-ingress
+
+spec:
+  ingressClassName: nginx # specifies in the ingress.yml file
+
+  tls:
+    - hosts:
+        - arshil.com
+      secretName: mongo-tls
+
+  rules:
+    - host: arshil.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mongo-admin-service # service location
+                port:
+                  number: 8081
