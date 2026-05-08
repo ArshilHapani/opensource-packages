@@ -4,10 +4,15 @@ REGISTRY := ghcr.io/$(GH_USERNAME)
 
 # images
 PG_CRON_IMAGE := $(REGISTRY)/pg-with-cron:16
+OPENSSL_FIPS := $(REGISTRY)/openssl-fips:3.1.2
 
-build-pg-cron:
-	docker build -t $(PG_CRON_IMAGE) -f pg-cron/pg.Dockerfile pg-cron/
+build-and-push-pg-cron:
+	docker build -t $(PG_CRON_IMAGE) -f pg-cron/Dockerfile pg-cron/
 	docker push $(PG_CRON_IMAGE)
+
+build-and-push-openssl-fips:
+	docker build -t $(OPENSSL_FIPS) -f openssl-fips/Dockerfile openssl-fips/
+	docker push $(OPENSSL_FIPS)
 
 start-nomad-cluster:
 	@cd ./learn-nomad-getting-started && sudo nomad agent -dev \
