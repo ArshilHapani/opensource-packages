@@ -7,8 +7,12 @@ PG_CRON_IMAGE := $(REGISTRY)/pg-with-cron:16
 OPENSSL_FIPS := $(REGISTRY)/openssl-fips:3.1.2
 
 build-and-push-pg-cron:
-	docker build -t $(PG_CRON_IMAGE) -f pg-cron/Dockerfile pg-cron/
-	docker push $(PG_CRON_IMAGE)
+	docker buildx build \
+		--platform linux/amd64,linux/arm64 \
+		--tag $(PG_CRON_IMAGE) \
+		--file pg-cron/Dockerfile \
+		--push \
+		pg-cron/
 
 build-and-push-openssl-fips:
 	docker build -t $(OPENSSL_FIPS) -f openssl-fips/Dockerfile openssl-fips/
